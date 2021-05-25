@@ -37,6 +37,20 @@ a {
 .input--text {
     background: none;
     border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.input--text:focus {
+    outline: none;
+}
+
+/* AUTOFILL */
+.input--text:-webkit-autofill,
+.input--text:-webkit-autofill:hover,
+.input--text:-webkit-autofill:focus,
+.input--text:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #000 !important;
 }
 
 /* VENDOR PREFIX */
@@ -80,7 +94,7 @@ header.section .menu--tab .tab__main {
 }
 
 header.section .menu--tab .tab__main:first-child {
-    margin-right: 48px;
+    margin-right: 1.25em;
 }
 
 header.section .menu--tab .tab__main a {
@@ -88,14 +102,20 @@ header.section .menu--tab .tab__main a {
 }
 
 /* SEARCH */
-.section__search {
+.section__search,
+.section__search .search__wrap,
+#search--form,
+.section__search .weather {
     display: flex;
+}
+
+.section__search {
     justify-content: center;
     margin: 70px 0;
 }
 
-.section__search .search__wrap {
-    display: flex;
+.section__search .search__wrap,
+#search--form {
     align-items: center;
 }
 
@@ -103,9 +123,6 @@ header.section .menu--tab .tab__main a {
     padding: 20px 15px;
     border: 1px solid #c4c4c4;
     border-radius: 40px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
     margin-right: 30px;
 }
 
@@ -116,10 +133,6 @@ header.section .menu--tab .tab__main a {
 #input--search {
     font-size: 36px;
     text-align: right;
-}
-
-.section__search .weather {
-    display: flex;
 }
 
 .section__search .weather .weather__temp {
@@ -145,6 +158,10 @@ header.section .menu--tab .tab__main a {
     font-size: 14px;
 }
 
+.section__info .info__cafe .cafe__summary .cafe__title {
+    line-height: 2;
+}
+
 /* PAGINATION */
 .pagination {
     display: flex;
@@ -157,8 +174,11 @@ header.section .menu--tab .tab__main a {
     align-items: center;
 }
 
-.pagination .page__item a {
-    color: #c4c4c4;
+.pagination .page__item {
     font-size: 24px;
     padding: 5px;
+}
+
+.pagination .page__item a {
+    color: #c4c4c4;
 }
