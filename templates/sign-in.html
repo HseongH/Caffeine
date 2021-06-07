@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .danger {
+            color: red;
+        }
+    </style>
+
+    <script src="../static/js/sign-up.js" defer></script>
+</head>
+<body>
+    <div class="sign-in">
+        <div class="name-area">
+            <input type="text" id="input--name">
+            <p class="name-status">사용할 이름을 입력해주세요.</p>
+        </div>
+
+        <div class="id-area">
+            <div class="input--area">
+                <input type="text" id="input--id" placeholder="아이디">
+                <button class="check">중복확인</button>
+            </div>
+
+            <p class="id-status">아이디는 10자 이내의 영문과 숫자만 사용 가능합니다.</p>
+        </div>
+
+        <div class="pwd-area">
+            <input type="password" id="input--pwd" placeholder="비밀번호">
+            <p class="pwd-status">영문과 숫자의 조합 8-20의 비밀번호를 설정해주세요.</p>
+        </div>
+
+        <div class="repwd">
+            <input type="password" id="input--repwd" placeholder="비밀번호 재입력">
+            <p class="repwd-status">비밀번호를 다시 입력해주세요.</p>
+        </div>
+    </div>
+</body>
+</html>
