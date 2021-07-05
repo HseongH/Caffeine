@@ -1,0 +1,33 @@
+@import 'variable';
+
+.section--post {
+  .post {
+    @include radiusBox(15px);
+    background: $postBg;
+    margin-bottom: 15px;
+  }
+
+  .create-post {
+    @include flexVer();
+
+    .btn {
+      padding: 0;
+      background: none;
+      color: $btnBg;
+      margin-right: 20px;
+    }
+  }
+
+  .no-posts {
+    text-align: center;
+
+    .title {
+      display: block;
+    }
+
+    .title,
+    .contents {
+      margin-bottom: 20px;
+    }
+  }
+}

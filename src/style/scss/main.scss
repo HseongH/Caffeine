@@ -2,12 +2,16 @@
 
 // COMMON
 * {
-  @include common();
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 // SECTION & CONTAINER
 .section {
   position: relative;
+  color: $fontColor;
 
   .container {
     width: 590px;
@@ -17,28 +21,30 @@
 
 // BUTTON
 .btn {
-  padding: 8px 16px;
   background: $btnBg;
-  @include common($btnColor);
+  color: $btnColor;
   font-weight: 600;
   cursor: pointer;
   border: none;
-  border-radius: 10px;
+  @include radiusBox(8px 18px);
 
   &:focus {
     outline: none;
+  }
+
+  &:disabled {
+    background: #eee;
+    color: #aaa;
   }
 }
 
 // INPUT
 .input--text {
-  @include common();
+  color: $fontColor;
   width: 100%;
-  background: #eee;
+  background: $bgColor;
   border: 1px solid #ccc;
-  border-radius: 10px;
-  box-sizing: border-box;
-  padding: 12px 14px;
+  @include radiusBox(12px 14px);
 
   &::placeholder {
     color: $lightColor;
@@ -57,9 +63,80 @@
   }
 }
 
-// TITLE
+.status-display {
+  font-size: 12px;
+  line-height: 2;
+  text-indent: 10px;
+  color: $danger;
+  display: none;
+}
+
+// TEXT
 .title {
   font-weight: 700;
   line-height: 1.5;
   font-size: 23px;
+}
+
+.contents {
+  color: $lightColor;
+}
+
+// HEADER
+header.section {
+  width: 100%;
+  position: fixed;
+  padding: 0 100px;
+  box-sizing: border-box;
+  background: #fff;
+  z-index: 10;
+
+  .container {
+    width: 100%;
+    height: 100px;
+    @include disFlex(space-between);
+  }
+
+  .tab-menu .btn {
+    width: 80px;
+    background: none;
+    color: $fontColor;
+
+    &:first-child {
+      margin-right: 20px;
+    }
+
+    &.selected {
+      color: $btnBg;
+    }
+
+    &:hover {
+      background: #eee;
+    }
+  }
+
+  .user-info .btn {
+    background: #ddd;
+
+    &:first-child {
+      margin-right: 10px;
+    }
+
+    &:hover {
+      background: #aaa;
+    }
+  }
+}
+
+// SECTION
+section {
+  padding-top: 120px;
+  min-height: 100vh;
+  background: #eee;
+  box-sizing: border-box;
+
+  .container {
+    background: $postBg;
+    @include radiusBox(15px);
+  }
 }

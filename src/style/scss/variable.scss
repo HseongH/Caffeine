@@ -1,19 +1,37 @@
 // TEXT
 $fontColor: #343a40;
 $lightColor: #6c757d;
+$danger: #fa5252;
+$primary: #469d89;
 
 // BUTTON
 $btnColor: #fff;
-$btnBg: #ffbf69;
+$btnBg: #118ab2;
+$submitBg: #06d6a0;
 
 // BACKGROUND
 $bgColor: #eee;
+$postBg: #fff;
 
 // FUNCTION
-@mixin common($color: $fontColor) {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.25;
-  color: $color;
-  font-family: 'Noto Sans KR', sans-serif;
+@mixin disFlex($sortHoz: center, $sortVer: center) {
+  display: flex;
+  justify-content: $sortHoz;
+  align-items: $sortVer;
+}
+
+@mixin flexHoz($sort: center) {
+  display: flex;
+  justify-content: $sort;
+}
+
+@mixin flexVer($sort: center) {
+  display: flex;
+  align-items: $sort;
+}
+
+@mixin radiusBox($padding, $radius: 10px) {
+  border-radius: $radius;
+  box-sizing: border-box;
+  padding: $padding;
 }

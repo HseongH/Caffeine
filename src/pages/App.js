@@ -3,7 +3,12 @@ import React from 'react';
 
 // COMPONENTS
 import Header from '../components/Header';
-import Section from '../components/Section';
+
+// PAGES
+import Post from './Post';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
+import AddPost from './AddPost';
 
 // STYLE
 import '../style/scss/main.scss';
@@ -13,7 +18,10 @@ function App() {
     <>
       <Header />
 
-      <Section />
+      {/* <Post /> */}
+      {/* <SignUp /> */}
+      <SignIn />
+      {/* <AddPost /> */}
     </>
   );
 }

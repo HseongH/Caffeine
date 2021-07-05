@@ -2,7 +2,6 @@
 import React from 'react';
 
 // COMPONENTS
-import Layout from './Layout';
 import Button from './Button';
 
 // ICONS
@@ -15,51 +14,35 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 const Header = (props) => {
   return (
     <header className="section">
-      <Layout sortHoz={'space-between'} width={'100%'} height={'100px'}>
-        <h1>
+      <div className="container">
+        <h1 className="logo">
           <Button>
             <AllInclusiveIcon style={{ fontSize: '30' }} />
           </Button>
         </h1>
 
-        <Layout>
-          <Button
-            bg={'none'}
-            color={'#ffbf69'}
-            padding={'5px 20px'}
-            width={'80px'}
-            hoverBG={'#eee'}
-          >
+        <div className="tab-menu">
+          <Button>
             <HomeIcon style={{ fontSize: '30' }} />
           </Button>
 
-          <Button bg={'none'} color={'#000'} padding={'5px 20px'} width={'80px'} hoverBG={'#eee'}>
+          <Button>
             <NoteAddIcon style={{ fontSize: '30' }} />
           </Button>
-        </Layout>
+        </div>
 
-        <Layout>
-          <Button bg={'#ddd'} margin={'0 15px 0 0'} hoverBG={'#aaa'}>
+        <div className="user-info">
+          <Button>
             <NotificationsIcon />
           </Button>
 
-          <Button bg={'#ddd'} hoverBG={'#aaa'}>
+          <Button>
             <PersonIcon />
           </Button>
-        </Layout>
-      </Layout>
+        </div>
+      </div>
     </header>
   );
 };
-
-Header.defaultProps = {};
-
-// const HeaderStyle = styled.header`
-//   width: 100%;
-//   position: fixed;
-//   padding: 0 100px;
-//   box-sizing: border-box;
-//   background: #fff;
-// `;
 
 export default Header;

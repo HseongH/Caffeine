@@ -2,23 +2,31 @@
 import React from 'react';
 
 // COMPONENTS
-import Layout from '../components/Layout';
-import Heading from '../components/Title';
 import Input from '../components/Input';
+import Button from '../components/Button';
+
+// STYLE
+import '../style/scss/sign.scss';
 
 const SignUp = (props) => {
   return (
-    <Layout isFlex={false} background={'#fff'}>
-      <Heading fontSize={'22px'}>회원가입</Heading>
+    <section className="section section--sign">
+      <form className="container">
+        <h2 className="title">회원가입</h2>
 
-      <Input placeholder={'아이디를 입력해주세요.'} margin={'0 0 20px 0'} />
+        <Input placeholder={'아이디를 입력해주세요.'} />
 
-      <Input placeholder={'닉네임을 입력해주세요.'} margin={'0 0 20px 0'} />
+        <Input placeholder={'닉네임을 입력해주세요.'} />
 
-      <Input placeholder={'비밀번호를 입력해주세요.'} type={'password'} margin={'0 0 20px 0'} />
+        <Input placeholder={'비밀번호를 입력해주세요.'} type={'password'} />
 
-      <Input placeholder={'비밀번호를 입력해주세요.'} type={'password'} />
-    </Layout>
+        <Input placeholder={'비밀번호를 입력해주세요.'} type={'password'} />
+
+        <Button disabled={true} type={'submit'}>
+          회원가입
+        </Button>
+      </form>
+    </section>
   );
 };
 

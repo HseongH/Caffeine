@@ -1,0 +1,49 @@
+@import 'variable';
+
+.section--add-post {
+  .title {
+    margin-bottom: 20px;
+  }
+
+  .file-box {
+    position: relative;
+    @include flexVer();
+    margin-bottom: 20px;
+
+    .label--file {
+      @include flexVer();
+      @include radiusBox(10px 20px);
+      background: $submitBg;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .input--file {
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .preview {
+    min-height: 300px;
+    background: #ddd;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    display: none;
+  }
+
+  .input--text {
+    height: 300px;
+    resize: none;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px 0;
+  }
+}
