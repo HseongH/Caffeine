@@ -1,6 +1,5 @@
 // LIBRARY
 import React from 'react';
-import styled from 'styled-components';
 
 // COMPONENTS
 import Layout from './Layout';
@@ -8,14 +7,14 @@ import Button from './Button';
 
 // ICONS
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import NoteAddOutlinedIcon from '@material-ui/icons/NoteAddOutlined';
+import HomeIcon from '@material-ui/icons/Home';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import PersonIcon from '@material-ui/icons/Person';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const Header = (props) => {
   return (
-    <HeaderStyle>
+    <header className="section">
       <Layout sortHoz={'space-between'} width={'100%'} height={'100px'}>
         <h1>
           <Button>
@@ -24,12 +23,18 @@ const Header = (props) => {
         </h1>
 
         <Layout>
-          <Button bg={'none'} color={'#000'} padding={'5px 20px'} width={'120px'} hoverBG={'#eee'}>
-            <HomeOutlinedIcon style={{ fontSize: '30' }} />
+          <Button
+            bg={'none'}
+            color={'#ffbf69'}
+            padding={'5px 20px'}
+            width={'80px'}
+            hoverBG={'#eee'}
+          >
+            <HomeIcon style={{ fontSize: '30' }} />
           </Button>
 
-          <Button bg={'none'} color={'#000'} padding={'5px 20px'} width={'120px'} hoverBG={'#eee'}>
-            <NoteAddOutlinedIcon style={{ fontSize: '30' }} />
+          <Button bg={'none'} color={'#000'} padding={'5px 20px'} width={'80px'} hoverBG={'#eee'}>
+            <NoteAddIcon style={{ fontSize: '30' }} />
           </Button>
         </Layout>
 
@@ -43,18 +48,18 @@ const Header = (props) => {
           </Button>
         </Layout>
       </Layout>
-    </HeaderStyle>
+    </header>
   );
 };
 
 Header.defaultProps = {};
 
-const HeaderStyle = styled.header`
-  width: 100%;
-  position: fixed;
-  padding: 0 100px;
-  box-sizing: border-box;
-  background: #fff;
-`;
+// const HeaderStyle = styled.header`
+//   width: 100%;
+//   position: fixed;
+//   padding: 0 100px;
+//   box-sizing: border-box;
+//   background: #fff;
+// `;
 
 export default Header;

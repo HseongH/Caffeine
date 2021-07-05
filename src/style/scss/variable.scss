@@ -1,0 +1,19 @@
+// TEXT
+$fontColor: #343a40;
+$lightColor: #6c757d;
+
+// BUTTON
+$btnColor: #fff;
+$btnBg: #ffbf69;
+
+// BACKGROUND
+$bgColor: #eee;
+
+// FUNCTION
+@mixin common($color: $fontColor) {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: $color;
+  font-family: 'Noto Sans KR', sans-serif;
+}

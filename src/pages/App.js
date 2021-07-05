@@ -2,8 +2,11 @@
 import React from 'react';
 
 // COMPONENTS
-import Header from './Header';
-import Section from './Section';
+import Header from '../components/Header';
+import Section from '../components/Section';
+
+// STYLE
+import '../style/scss/main.scss';
 
 function App() {
   return (

@@ -1,0 +1,33 @@
+@import 'variable';
+
+// COMMON
+* {
+  @include common();
+}
+
+// SECTION & CONTAINER
+.section {
+  position: relative;
+
+  .container {
+    width: 590px;
+    margin: 0 auto;
+  }
+}
+
+// BUTTON
+.btn {
+  padding: 8px 16px;
+  background: $btnBg;
+  @include common($btnColor);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// INPUT

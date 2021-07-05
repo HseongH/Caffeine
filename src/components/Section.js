@@ -1,30 +1,32 @@
 // LIBRARY
 import React from 'react';
-import styled from 'styled-components';
 
 // COMPONENTS
 import Layout from './Layout';
-import Post from './Post';
+
+// PAGES
+import Post from '../pages/Post';
+import SignUp from '../pages/SignUp';
 
 const Section = (props) => {
   return (
-    <SectionStyle>
-      <Layout width={'590px'} sortVer={'none'}>
-        <Post />
+    <section className="section">
+      <Layout width={'590px'} isFlex={false}>
+        <SignUp />
       </Layout>
-    </SectionStyle>
+    </section>
   );
 };
 
 Section.defaultProps = {};
 
-const SectionStyle = styled.header`
-  padding-top: 120px;
-  min-height: 100vh;
-  background: #eee;
-  display: flex;
-  justify-content: center;
-  box-sizing: border-box;
-`;
+// const SectionStyle = styled.section`
+//   padding-top: 120px;
+//   min-height: 100vh;
+//   background: #eee;
+//   display: flex;
+//   justify-content: center;
+//   box-sizing: border-box;
+// `;
 
 export default Section;
