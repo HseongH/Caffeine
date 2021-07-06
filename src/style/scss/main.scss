@@ -19,6 +19,20 @@
   }
 }
 
+// SECTION
+section {
+  padding-top: 120px;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #eee;
+  box-sizing: border-box;
+}
+
+// HIDE
+.hide {
+  display: none;
+}
+
 // BUTTON
 .btn {
   background: $btnBg;
@@ -82,6 +96,17 @@
   color: $lightColor;
 }
 
+// MODAL
+.modal {
+  @include radiusBox(10px 20px);
+  background: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  color: $fontColor;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 // HEADER
 header.section {
   width: 100%;
@@ -90,6 +115,7 @@ header.section {
   box-sizing: border-box;
   background: #fff;
   z-index: 10;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 
   .container {
     width: 100%;
@@ -101,9 +127,10 @@ header.section {
     width: 80px;
     background: none;
     color: $fontColor;
+    margin-right: 20px;
 
-    &:first-child {
-      margin-right: 20px;
+    &:last-child {
+      margin-right: 0;
     }
 
     &.selected {
@@ -115,24 +142,26 @@ header.section {
     }
   }
 
-  .user-info .btn {
-    background: #ddd;
+  .user-info {
+    @include flexVer();
 
-    &:first-child {
+    .btn {
+      background: #ddd;
       margin-right: 10px;
-    }
 
-    &:hover {
-      background: #aaa;
+      &:last-child {
+        padding: 11.5px 18px;
+        margin-right: 0;
+        background: $btnBg;
+      }
+
+      &:hover {
+        background: #aaa;
+      }
+
+      &.btn--info {
+        position: relative;
+      }
     }
   }
-}
-
-// SECTION
-section {
-  padding-top: 120px;
-  min-height: 100vh;
-  overflow: hidden;
-  background: #eee;
-  box-sizing: border-box;
 }

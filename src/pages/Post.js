@@ -1,9 +1,11 @@
 // LIBRARY
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 // COMPONENTS
 import Button from '../components/Button';
 import Contents from '../components/Contents';
+import Permit from '../common/Permit';
 
 // ICONS
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -12,26 +14,34 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import '../style/scss/post.scss';
 
 const Post = (props) => {
+  const postList = useSelector((state) => state.post.list);
+
   return (
     <section className="section section--post">
       <div className="container">
-        <div className="post create-post">
-          <Button>
-            <AddCircleIcon style={{ fontSize: 50 }} />
-          </Button>
+        <Permit>
+          <div className="post create-post">
+            <Button>
+              <AddCircleIcon style={{ fontSize: 50 }} />
+            </Button>
 
-          <strong className="title">게시물 추가</strong>
-        </div>
+            <strong className="title">게시물 추가</strong>
+          </div>
+        </Permit>
 
-        <div className="post no-posts">
-          <strong className="title">게시물 없음</strong>
+        {!postList.length ? (
+          <div className="post no-posts">
+            <strong className="title">게시물 없음</strong>
 
-          <p className="contents">게시물을 추가하여 사진이나 글을 공유해보세요.</p>
+            <Permit>
+              <p className="contents">게시물을 추가하여 사진이나 글을 공유해보세요.</p>
 
-          <Button>게시물 추가</Button>
-        </div>
-
-        <Contents />
+              <Button>게시물 추가</Button>
+            </Permit>
+          </div>
+        ) : (
+          <Contents postList={postList} />
+        )}
       </div>
     </section>
   );
