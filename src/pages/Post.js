@@ -3,6 +3,7 @@ import React from 'react';
 
 // COMPONENTS
 import Button from '../components/Button';
+import Contents from '../components/Contents';
 
 // ICONS
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -29,6 +30,8 @@ const Post = (props) => {
 
           <Button>게시물 추가</Button>
         </div>
+
+        <Contents />
       </div>
     </section>
   );

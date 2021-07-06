@@ -18,9 +18,9 @@ function App() {
     <>
       <Header />
 
-      {/* <Post /> */}
+      <Post />
       {/* <SignUp /> */}
-      <SignIn />
+      {/* <SignIn /> */}
       {/* <AddPost /> */}
     </>
   );

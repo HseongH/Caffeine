@@ -132,11 +132,7 @@ header.section {
 section {
   padding-top: 120px;
   min-height: 100vh;
+  overflow: hidden;
   background: #eee;
   box-sizing: border-box;
-
-  .container {
-    background: $postBg;
-    @include radiusBox(15px);
-  }
 }

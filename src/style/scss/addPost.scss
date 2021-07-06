@@ -1,6 +1,11 @@
 @import 'variable';
 
 .section--add-post {
+  .container {
+    background: $postBg;
+    @include radiusBox(15px);
+  }
+
   .title {
     margin-bottom: 20px;
   }

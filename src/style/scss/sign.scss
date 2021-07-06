@@ -1,6 +1,11 @@
 @import 'variable';
 
 .section--sign {
+  .container {
+    background: $postBg;
+    @include radiusBox(15px);
+  }
+
   .title {
     margin-bottom: 20px;
   }
@@ -17,5 +22,15 @@
     width: 100%;
     background: $submitBg;
     padding: 12px 0;
+  }
+
+  #sign-in-form {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  .sign-up .btn {
+    background: $btnBg;
   }
 }
