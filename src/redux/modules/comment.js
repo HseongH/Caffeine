@@ -5,7 +5,7 @@ import moment from 'moment';
 
 // FIREBASE
 import firebase from 'firebase';
-import { firestore } from '../../firebase/firebase';
+import { firestore, realtime } from '../../firebase/firebase';
 import { postActions } from './post';
 
 // ACTION
@@ -65,7 +65,6 @@ const addCommentFB = (postId, contents) => {
     commentDB.add(comment).then((doc) => {
       const postDB = firestore.collection('post');
       comment = { ...comment, id: doc.id };
-      console.log(comment);
 
       const post = getState().post.list.find((l) => l.id === postId);
       const increment = firebase.firestore.FieldValue.increment(1);
@@ -75,6 +74,26 @@ const addCommentFB = (postId, contents) => {
         .update({ commentCnt: increment })
         .then((_post) => {
           dispatch(addComment(postId, comment));
+
+          if (post) {
+            const notiItem = realtime.ref(`noti/${post.userInfo.userId}/list`).push();
+
+            notiItem.set(
+              {
+                postId,
+                userName: comment.userName,
+                imageUrl: post.imageUrl,
+                insertDt: comment.insertDt,
+              },
+              (error) => {
+                if (error) console.error('알림 저장 실패', error);
+                else {
+                  const notiDB = realtime.ref(`noti/${post.userInfo.uid}`);
+                  notiDB.update({ read: false });
+                }
+              }
+            );
+          }
         });
     });
   };

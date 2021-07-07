@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 // COMPONENTS
 import Button from './Button';
 import Permit from '../common/Permit';
+import NotiBadge from './NotiBadge';
 
 // REDUX
 import { userActions } from '../redux/modules/user';
@@ -20,8 +21,6 @@ import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import HomeIcon from '@material-ui/icons/Home';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import PersonIcon from '@material-ui/icons/Person';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const Header = React.memo((props) => {
   const dispatch = useDispatch();
@@ -55,9 +54,7 @@ const Header = React.memo((props) => {
           {useCheckLoggedIn() ? (
             <>
               <Button>
-                <Badge color="secondary" badgeContent={0}>
-                  <NotificationsIcon />
-                </Badge>
+                <NotiBadge />
               </Button>
 
               <Button>
