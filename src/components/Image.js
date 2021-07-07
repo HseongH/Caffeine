@@ -2,11 +2,9 @@
 import React from 'react';
 
 const Image = (props) => {
-  const { children } = props;
+  const { src, alt } = props;
 
-  return <div>children</div>;
+  return <img src={src} alt={alt} />;
 };
-
-Image.defaultProps = {};
 
 export default Image;

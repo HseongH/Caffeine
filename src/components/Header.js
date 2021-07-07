@@ -20,6 +20,7 @@ import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import HomeIcon from '@material-ui/icons/Home';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import PersonIcon from '@material-ui/icons/Person';
+import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const Header = React.memo((props) => {
@@ -40,7 +41,11 @@ const Header = React.memo((props) => {
           </Button>
 
           <Permit>
-            <Button>
+            <Button
+              clickEvent={() => {
+                history.push('/add-post');
+              }}
+            >
               <NoteAddIcon style={{ fontSize: '30' }} />
             </Button>
           </Permit>
@@ -50,7 +55,9 @@ const Header = React.memo((props) => {
           {useCheckLoggedIn() ? (
             <>
               <Button>
-                <NotificationsIcon />
+                <Badge color="secondary" badgeContent={0}>
+                  <NotificationsIcon />
+                </Badge>
               </Button>
 
               <Button>

@@ -2,7 +2,7 @@
 import React from 'react';
 
 const Input = (props) => {
-  const { placeholder, type, status, value, changeEvent } = props;
+  const { placeholder, type, status, value, changeEvent, keyPressEvent } = props;
 
   return (
     <div className="input-box">
@@ -12,6 +12,7 @@ const Input = (props) => {
         placeholder={placeholder}
         value={value}
         onChange={changeEvent}
+        onKeyPress={keyPressEvent}
       />
 
       <p className="status-display">{status}</p>

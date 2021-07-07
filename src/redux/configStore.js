@@ -7,9 +7,11 @@ import { connectRouter } from 'connected-react-router';
 // REDUCER
 import user from './modules/user';
 import post from './modules/post';
+import image from './modules/image';
+import comment from './modules/comment';
 
 export const history = createBrowserHistory();
-const rootReducer = combineReducers({ user, post, router: connectRouter(history) });
+const rootReducer = combineReducers({ user, post, image, comment, router: connectRouter(history) });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

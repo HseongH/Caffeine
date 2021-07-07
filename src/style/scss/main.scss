@@ -28,6 +28,12 @@ section {
   box-sizing: border-box;
 }
 
+// IMAGE
+img {
+  width: 100%;
+  display: block;
+}
+
 // HIDE
 .hide {
   display: none;
@@ -146,21 +152,16 @@ header.section {
     @include flexVer();
 
     .btn {
-      background: #ddd;
-      margin-right: 10px;
+      background: none;
+      padding: 0;
+      margin-right: 20px;
+      color: $fontColor;
 
       &:last-child {
-        padding: 11.5px 18px;
+        padding: 8px 18px;
         margin-right: 0;
         background: $btnBg;
-      }
-
-      &:hover {
-        background: #aaa;
-      }
-
-      &.btn--info {
-        position: relative;
+        color: $btnColor;
       }
     }
   }

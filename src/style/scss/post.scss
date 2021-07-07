@@ -46,6 +46,8 @@
         height: 46px;
         border-radius: 50%;
         background: #eee;
+        overflow: hidden;
+        @include disFlex();
       }
 
       .info--text {
@@ -66,7 +68,6 @@
 
     .image-contents {
       width: 100%;
-      padding-bottom: 75%;
       background: #eee;
       margin-bottom: 20px;
     }

@@ -1,11 +1,14 @@
 // LIBRARY
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 // COMPONENTS
 import Button from '../components/Button';
 import Contents from '../components/Contents';
 import Permit from '../common/Permit';
+
+// REDUX
+import { postActions } from '../redux/modules/post';
 
 // ICONS
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -14,7 +17,12 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import '../style/scss/post.scss';
 
 const Post = (props) => {
+  const dispatch = useDispatch();
   const postList = useSelector((state) => state.post.list);
+
+  useEffect(() => {
+    dispatch(postActions.getPostFB());
+  }, []);
 
   return (
     <section className="section section--post">
