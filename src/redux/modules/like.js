@@ -52,8 +52,6 @@ const addLikeFB = (postId) => {
     let like = {
       postId,
       userId: userInfo.uid,
-      userName: userInfo.name,
-      userProfile: userInfo.profile,
     };
 
     likeDB.add(like).then((doc) => {
