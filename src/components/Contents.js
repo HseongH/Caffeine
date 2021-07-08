@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 // COMPONENTS
-import Button from './Button';
 import Comments from './Comments';
+import Dropdown from './Dropdown';
+import Like from './Like';
 
 // ICON
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import PersonIcon from '@material-ui/icons/Person';
 
 const Contents = (props) => {
   const { postList } = props;
 
+  const state = useSelector((state) => state);
+  const userInfo = state.user.user;
+  const userId = userInfo && userInfo.uid;
+
+  const [open, setOpen] = useState(false);
+
+  const handleToggle = () => {
+    setOpen((show) => !show);
+  };
+
   return (
     <>
-      {postList.map((post) => {
+      {postList.map((post, idx) => {
         return (
           <div className="post real-post" key={post.id}>
             <div className="user--info">
@@ -33,9 +43,7 @@ const Contents = (props) => {
                 </div>
               </div>
 
-              <Button>
-                <MoreVertIcon />
-              </Button>
+              {userId === post.userInfo.userId && <Dropdown contents={['수정', '삭제']} />}
             </div>
 
             <p className="description">{post.contents}</p>
@@ -46,17 +54,17 @@ const Contents = (props) => {
 
             <div className="reaction">
               <div className="like">
-                <Button>
-                  <EmojiEmotionsIcon />
-                </Button>
+                <Like postId={post.id} userId={post.userInfo.userId} idx={idx} />
 
-                <strong className="contents like--counter">10</strong>
+                <strong className="contents like--counter">{post.likeCnt}</strong>
               </div>
 
-              <strong className="comment--counter contents">댓글 {post.commentCnt}개</strong>
+              <strong onClick={handleToggle} className="comment--counter contents">
+                댓글 {post.commentCnt}개
+              </strong>
             </div>
 
-            <Comments postId={post.id} />
+            <Comments show={open} postId={post.id} />
           </div>
         );
       })}

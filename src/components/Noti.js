@@ -12,7 +12,7 @@ const Noti = (props) => {
 
       <p className="contents">
         <strong className="title">{userName}</strong>님이 게시글에{' '}
-        <strong className="work">좋아요</strong>를 눌렀어요!!
+        <strong className="work">좋아요를 눌렀어요!!</strong>
       </p>
     </div>
   );

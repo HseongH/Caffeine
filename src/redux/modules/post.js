@@ -4,8 +4,7 @@ import { produce } from 'immer';
 import moment from 'moment';
 
 // FIREBASE
-import { firestore } from '../../firebase/firebase';
-import { storage } from '../../firebase/firebase';
+import { firestore, storage } from '../../firebase/firebase';
 
 // REDUX
 import { imgActions } from './image';
@@ -13,10 +12,13 @@ import { imgActions } from './image';
 // ACTION
 const LOAD = 'post/LOAD';
 const CREATE = 'post/CREATE';
+const POST_UPDATE = 'post/UPDATE';
+const DELETE = 'post/DELETE';
 
 // ACTION CREATOR
 const getPost = createAction(LOAD, (postList) => ({ postList }));
 const addPost = createAction(CREATE, (post) => ({ post }));
+const updatePost = createAction(POST_UPDATE, (postId, post) => ({ postId, post }));
 
 // INITIAL STATE
 const initialState = {
@@ -32,42 +34,12 @@ const getPostFB = () => {
       let postList = [];
 
       docs.forEach((doc) => {
-        const temp = doc.data();
-        const post = Object.keys(temp).reduce(
-          (acc, cur) => {
-            if (cur.indexOf('user') !== -1) {
-              return {
-                ...acc,
-                userInfo: {
-                  ...acc.userInfo,
-                  [cur]: temp[cur],
-                },
-              };
-            }
-
-            return { ...acc, [cur]: temp[cur] };
-          },
-          { id: doc.id, userInfo: {} }
-        );
-
-        postList = [...postList, post];
+        postList = [...postList, { ...doc.data(), id: doc.id }];
       });
-      console.log(postList);
+
       dispatch(getPost(postList));
     });
   };
-};
-
-const initialPost = {
-  id: 0,
-  userInfo: {
-    userName: 'mean0',
-    userProfile: 'https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg',
-  },
-  imageUrl: 'https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg',
-  contents: '고양이네요!',
-  commentCnt: 10,
-  insertDt: '2021-02-27 10:00:00',
 };
 
 const addPostFB = (contents) => {
@@ -77,12 +49,13 @@ const addPostFB = (contents) => {
       userName: temp.name,
       userId: temp.uid,
       userProfile: temp.profile,
-      commentCnt: 0,
     };
 
     const _post = {
       contents,
-      insertDt: moment().format('YYYY.MM.DD hh:mm'),
+      insertDt: moment().format('YYYY.MM.DD HH:mm'),
+      commentCnt: 0,
+      likeCnt: 0,
     };
 
     const image = getState().image.preview;
@@ -100,7 +73,7 @@ const addPostFB = (contents) => {
           })
           .then((url) => {
             postDB
-              .add({ ...userInfo, ..._post, imageUrl: url })
+              .add({ userInfo, ..._post, imageUrl: url })
               .then((doc) => {
                 const post = { userInfo, ..._post, id: doc.id, imageUrl: url };
 
@@ -147,6 +120,66 @@ const getOnePostFB = (id) => {
   };
 };
 
+const updateCountFB = (postId, post) => {
+  return function (dispatch) {
+    if (!postId) return;
+
+    postDB
+      .doc(postId)
+      .update(post)
+      .then((doc) => {
+        dispatch(updatePost(postId, { ...post }));
+      });
+
+    return;
+  };
+};
+
+const updatePostFB = (postId, post) => {
+  return function (dispatch, getState, { history }) {
+    if (!postId) return;
+
+    const image = getState().image.preview;
+    const postIdx = getState().post.list.findIndex((p) => p.id === postId);
+    const _post = getState().post.list[postIdx];
+
+    if (image === _post.imageUrl) {
+      postDB
+        .doc(postId)
+        .update(post)
+        .then((doc) => {
+          dispatch(updatePost(postId, { ...post }));
+          history.replace('/');
+        });
+
+      return;
+    }
+
+    const userId = getState().user.user.uid;
+    const upload = storage.ref(`images/${userId}_${Date.now()}`).putString(image, 'data_url');
+
+    upload.then((snapshot) => {
+      snapshot.ref
+        .getDownloadURL()
+        .then((url) => {
+          return url;
+        })
+        .then((url) => {
+          postDB
+            .doc(postId)
+            .update({ ...post, imageUrl: url })
+            .then((doc) => {
+              dispatch(updatePost(postId, { ...post, imageUrl: url }));
+              history.replace('/');
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  };
+};
+
 // REDUCER
 export default handleActions(
   {
@@ -166,8 +199,14 @@ export default handleActions(
 
     [CREATE]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.post);
         draft.list.unshift(action.payload.post);
+      }),
+
+    [POST_UPDATE]: (state, action) =>
+      produce(state, (draft) => {
+        const idx = draft.list.findIndex((p) => p.id === action.payload.postId);
+
+        draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
       }),
   },
   initialState
@@ -179,4 +218,6 @@ export const postActions = {
   getPostFB,
   addPostFB,
   getOnePostFB,
+  updatePostFB,
+  updateCountFB,
 };

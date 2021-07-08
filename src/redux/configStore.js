@@ -9,9 +9,17 @@ import user from './modules/user';
 import post from './modules/post';
 import image from './modules/image';
 import comment from './modules/comment';
+import like from './modules/like';
 
 export const history = createBrowserHistory();
-const rootReducer = combineReducers({ user, post, image, comment, router: connectRouter(history) });
+const rootReducer = combineReducers({
+  user,
+  post,
+  image,
+  comment,
+  like,
+  router: connectRouter(history),
+});
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

@@ -2,10 +2,10 @@
 import React from 'react';
 
 const Button = (props) => {
-  const { children, clickEvent, type, disabled } = props;
+  const { children, clickEvent, type, disabled, buttonClass } = props;
 
   return (
-    <button className="btn" type={type} onClick={clickEvent} disabled={disabled}>
+    <button className={buttonClass} type={type} onClick={clickEvent} disabled={disabled}>
       {children}
     </button>
   );
@@ -15,6 +15,7 @@ Button.defaultProps = {
   type: 'button',
   clickEvent: () => {},
   disabled: false,
+  buttonClass: 'btn',
 };
 
 export default Button;

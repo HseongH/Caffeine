@@ -7,6 +7,7 @@ import { history } from '../redux/configStore';
 // REDUX
 import { useDispatch } from 'react-redux';
 import { userActions } from '../redux/modules/user';
+import { likeActions } from '../redux/modules/like';
 
 // FIREBASE
 import { apiKey } from '../firebase/firebase';

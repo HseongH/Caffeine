@@ -59,7 +59,7 @@ const addCommentFB = (postId, contents) => {
       userName: userInfo.name,
       userProfile: userInfo.profile,
       contents,
-      insertDt: moment().format('YYYY.MM.DD hh:mm'),
+      insertDt: moment().format('YYYY.MM.DD HH:mm'),
     };
 
     commentDB.add(comment).then((doc) => {
@@ -76,6 +76,13 @@ const addCommentFB = (postId, contents) => {
           dispatch(addComment(postId, comment));
 
           if (post) {
+            dispatch(
+              postActions.updateCountFB(postId, {
+                ...post,
+                commentCnt: parseInt(post.commentCnt) + 1,
+              })
+            );
+
             const notiItem = realtime.ref(`noti/${post.userInfo.userId}/list`).push();
 
             notiItem.set(
@@ -110,7 +117,7 @@ export default handleActions(
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         if (draft.list[action.payload.postId])
-          draft.list[action.payload.postId].push(action.payload.comment);
+          draft.list[action.payload.postId].unshift(action.payload.comment);
         else draft.list[action.payload.postId] = action.payload.comment;
       }),
 

@@ -3,21 +3,22 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // COMPONENTS
-import Button from './Button';
 import Input from './Input';
+import Dropdown from './Dropdown';
 
 // REDUX
 import { commentActions } from '../redux/modules/comment';
 
 // ICON
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PersonIcon from '@material-ui/icons/Person';
 
 const Comments = (props) => {
-  const { postId } = props;
+  const { postId, show } = props;
 
   const dispatch = useDispatch();
-  const commentList = useSelector((state) => state.comment.list);
+  const state = useSelector((state) => state);
+  const userId = state.user.user && state.user.user.uid;
+  const commentList = state.comment.list;
   const [contents, setContents] = useState('');
 
   const write = () => {
@@ -34,19 +35,21 @@ const Comments = (props) => {
   }, []);
 
   return (
-    <>
-      <Input
-        value={contents}
-        changeEvent={(event) => {
-          setContents(event.target.value);
-        }}
-        placeholder="댓글을 작성해 주세요."
-        keyPressEvent={(event) => {
-          if (event.key === 'Enter') {
-            write();
-          }
-        }}
-      />
+    <div className={show ? '' : 'hide'}>
+      {userId && (
+        <Input
+          value={contents}
+          changeEvent={(event) => {
+            setContents(event.target.value);
+          }}
+          placeholder="댓글을 작성해 주세요."
+          keyPressEvent={(event) => {
+            if (event.key === 'Enter') {
+              write();
+            }
+          }}
+        />
+      )}
 
       {commentList[postId] &&
         commentList[postId].map((elem) => {
@@ -69,14 +72,12 @@ const Comments = (props) => {
                   </div>
                 </div>
 
-                <Button>
-                  <MoreVertIcon style={{ fontSize: '18px' }} />
-                </Button>
+                {userId === elem.userId && <Dropdown contents={['수정', '삭제']} />}
               </div>
             </div>
           );
         })}
-    </>
+    </div>
   );
 };
 

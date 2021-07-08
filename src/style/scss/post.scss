@@ -36,6 +36,7 @@
       width: 100%;
       @include flexHoz(space-between);
       margin-bottom: 20px;
+      position: relative;
 
       .info--left {
         @include flexHoz(space-between);
@@ -53,6 +54,28 @@
       .info--text {
         line-height: 1.5;
         margin-left: 15px;
+      }
+
+      .dropdown {
+        width: 110px;
+        position: absolute;
+        top: 48px;
+        right: 0;
+        @include radiusBox(10px 0);
+        background: #fff;
+        line-height: 2;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        z-index: 10;
+
+        .down-items {
+          cursor: pointer;
+          padding: 0 15px;
+          box-sizing: border-box;
+
+          &:hover {
+            background: #eee;
+          }
+        }
       }
     }
 
@@ -80,6 +103,10 @@
 
         .like--counter {
           margin-left: 5px;
+        }
+
+        .active {
+          color: $likeActive;
         }
       }
 
@@ -120,6 +147,7 @@
         }
 
         .btn {
+          font-size: 14px;
           color: $lightColor;
         }
       }

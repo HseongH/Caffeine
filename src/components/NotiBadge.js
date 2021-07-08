@@ -13,7 +13,7 @@ import { realtime } from '../firebase/firebase';
 import { history } from '../redux/configStore';
 
 const NotiBadge = (props) => {
-  const [isRead, setIsRead] = useState(true);
+  const [isRead, setIsRead] = useState(false);
   const userId = useSelector((state) => state.user.user.uid);
   const notiDB = realtime.ref(`noti/${userId}`);
 
@@ -32,7 +32,7 @@ const NotiBadge = (props) => {
   }, []);
 
   return (
-    <Badge color="secondary" badgeContent={0} showZero={isRead} onClick={notiCheck}>
+    <Badge color="secondary" variant="dot" invisible={isRead} onClick={notiCheck}>
       <NotificationsIcon />
     </Badge>
   );
