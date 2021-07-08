@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // COMPONENTS
-import Comments from './Comments';
+import Reaction from './Reaction';
 import Dropdown from './Dropdown';
-import Like from './Like';
+
+// REDUX
+import { postActions } from '../redux/modules/post';
+
+// HISTORY
+import { history } from '../redux/configStore';
 
 // ICON
 import PersonIcon from '@material-ui/icons/Person';
 
 const Contents = (props) => {
+  const dispatch = useDispatch();
+
   const { postList } = props;
 
   const state = useSelector((state) => state);
   const userInfo = state.user.user;
   const userId = userInfo && userInfo.uid;
 
-  const [open, setOpen] = useState(false);
-
-  const handleToggle = () => {
-    setOpen((show) => !show);
+  const removePost = (postId) => {
+    dispatch(postActions.removePostFB(postId));
   };
 
   return (
@@ -43,28 +48,37 @@ const Contents = (props) => {
                 </div>
               </div>
 
-              {userId === post.userInfo.userId && <Dropdown contents={['수정', '삭제']} />}
+              {userId === post.userInfo.userId && (
+                <Dropdown>
+                  <li
+                    onClick={() => {
+                      history.push(`/modify-post?id=${post.id}`);
+                    }}
+                    className="down-items"
+                  >
+                    수정
+                  </li>
+                  <li
+                    className="down-items"
+                    onClick={() => {
+                      removePost(post.id);
+                    }}
+                  >
+                    삭제
+                  </li>
+                </Dropdown>
+              )}
             </div>
 
             <p className="description">{post.contents}</p>
 
-            <div className="image-contents">
-              <img src={post.imageUrl} alt={post.contents} />
-            </div>
-
-            <div className="reaction">
-              <div className="like">
-                <Like postId={post.id} userId={post.userInfo.userId} idx={idx} />
-
-                <strong className="contents like--counter">{post.likeCnt}</strong>
+            {post.imageUrl && (
+              <div className="image-contents">
+                <img src={post.imageUrl} alt={post.contents} />
               </div>
+            )}
 
-              <strong onClick={handleToggle} className="comment--counter contents">
-                댓글 {post.commentCnt}개
-              </strong>
-            </div>
-
-            <Comments show={open} postId={post.id} />
+            <Reaction post={post} index={idx} />
           </div>
         );
       })}

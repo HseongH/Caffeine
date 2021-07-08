@@ -59,36 +59,56 @@ img {
 }
 
 // INPUT
-.input--text {
-  color: $fontColor;
-  width: 100%;
-  background: $bgColor;
-  border: 1px solid #ccc;
-  @include radiusBox(12px 14px);
+.input-box {
+  .input--text {
+    color: $fontColor;
+    width: 100%;
+    background: $bgColor;
+    border: 1px solid #ccc;
+    @include radiusBox(12px 14px);
 
-  &::placeholder {
-    color: $lightColor;
+    &::placeholder {
+      color: $lightColor;
+    }
+
+    &::-webkit-input-placeholder {
+      color: $lightColor;
+    }
+
+    &:-ms-input-placeholder {
+      color: $lightColor;
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 
-  &::-webkit-input-placeholder {
-    color: $lightColor;
+  .status-display {
+    font-size: 12px;
+    line-height: 2;
+    text-indent: 10px;
   }
 
-  &:-ms-input-placeholder {
-    color: $lightColor;
+  &.danger {
+    .input--text {
+      border: solid $danger;
+    }
+
+    .status-display {
+      color: $danger;
+    }
   }
 
-  &:focus {
-    outline: none;
-  }
-}
+  &.saft {
+    .input--text {
+      border: solid $primary;
+    }
 
-.status-display {
-  font-size: 12px;
-  line-height: 2;
-  text-indent: 10px;
-  color: $danger;
-  display: none;
+    .status-display {
+      color: $primary;
+    }
+  }
 }
 
 // TEXT

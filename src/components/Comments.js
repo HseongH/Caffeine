@@ -1,31 +1,27 @@
 // LIBRARY
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-// COMPONENTS
-import Input from './Input';
-import Dropdown from './Dropdown';
 
 // REDUX
 import { commentActions } from '../redux/modules/comment';
+
+// COMPONENTS
+import Dropdown from './Dropdown';
 
 // ICON
 import PersonIcon from '@material-ui/icons/Person';
 
 const Comments = (props) => {
-  const { postId, show } = props;
+  const { postId } = props;
 
   const dispatch = useDispatch();
+
   const state = useSelector((state) => state);
   const userId = state.user.user && state.user.user.uid;
   const commentList = state.comment.list;
-  const [contents, setContents] = useState('');
 
-  const write = () => {
-    if (!contents) return;
-
-    dispatch(commentActions.addCommentFB(postId, contents));
-    setContents('');
+  const removeComment = (commentId) => {
+    dispatch(commentActions.delCommentDB(postId, commentId));
   };
 
   useEffect(() => {
@@ -35,22 +31,7 @@ const Comments = (props) => {
   }, []);
 
   return (
-    <div className={show ? '' : 'hide'}>
-      {userId && (
-        <Input
-          value={contents}
-          changeEvent={(event) => {
-            setContents(event.target.value);
-          }}
-          placeholder="댓글을 작성해 주세요."
-          keyPressEvent={(event) => {
-            if (event.key === 'Enter') {
-              write();
-            }
-          }}
-        />
-      )}
-
+    <>
       {commentList[postId] &&
         commentList[postId].map((elem) => {
           return (
@@ -72,17 +53,26 @@ const Comments = (props) => {
                   </div>
                 </div>
 
-                {userId === elem.userId && <Dropdown contents={['수정', '삭제']} />}
+                {userId === elem.userId && (
+                  <Dropdown>
+                    <li
+                      className="down-items"
+                      onClick={() => {
+                        removeComment(elem.id);
+                      }}
+                    >
+                      삭제
+                    </li>
+                  </Dropdown>
+                )}
               </div>
             </div>
           );
         })}
-    </div>
+    </>
   );
 };
 
-Comments.defaultProps = {
-  postId: null,
-};
+Comments.propTypes = {};
 
 export default Comments;

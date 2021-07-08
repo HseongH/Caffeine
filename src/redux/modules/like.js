@@ -1,6 +1,7 @@
 // LIBRARY
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
+import moment from 'moment';
 
 // FIREBASE
 import firebase from 'firebase';
@@ -72,23 +73,27 @@ const addLikeFB = (postId) => {
             dispatch(
               postActions.updateCountFB(postId, { ...post, likeCnt: parseInt(post.likeCnt) + 1 })
             );
-            //     const notiItem = realtime.ref(`noti/${post.userInfo.userId}/list`).push();
 
-            //     notiItem.set(
-            //       {
-            //         postId,
-            //         userName: comment.userName,
-            //         imageUrl: post.imageUrl,
-            //         insertDt: comment.insertDt,
-            //       },
-            //       (error) => {
-            //         if (error) console.error('알림 저장 실패', error);
-            //         else {
-            //           const notiDB = realtime.ref(`noti/${post.userInfo.uid}`);
-            //           notiDB.update({ read: false });
-            //         }
-            //       }
-            //     );
+            if (userInfo.uid !== post.userInfo.userId) {
+              const notiItem = realtime.ref(`noti/${post.userInfo.userId}/list`).push();
+
+              notiItem.set(
+                {
+                  postId,
+                  userName: userInfo.name,
+                  imageUrl: post.imageUrl,
+                  insertDt: moment().format('YYYY.MM.DD HH:mm'),
+                  action: '좋아요를 눌렀어요!!',
+                },
+                (error) => {
+                  if (error) console.error('알림 저장 실패', error);
+                  else {
+                    const notiDB = realtime.ref(`noti/${post.userInfo.userId}`);
+                    notiDB.update({ read: false });
+                  }
+                }
+              );
+            }
           }
         });
     });
@@ -101,7 +106,6 @@ const removeLikeFB = (postId) => {
     const [like] = getState().like.list[postId].filter((post) => post.userId === userInfo.uid);
     const likeId = like.id;
 
-    // likeDB.add(like).then((doc) => {
     likeDB
       .doc(likeId)
       .delete()
@@ -125,26 +129,8 @@ const removeLikeFB = (postId) => {
           dispatch(
             postActions.updateCountFB(postId, { ...post, likeCnt: parseInt(post.likeCnt) - 1 })
           );
-          // const notiItem = realtime.ref(`noti/${post.userInfo.userId}/list`).push();
-
-          // notiItem.set(
-          //   {
-          //     postId,
-          //     userName: comment.userName,
-          //     imageUrl: post.imageUrl,
-          //     insertDt: comment.insertDt,
-          //   },
-          //   (error) => {
-          //     if (error) console.error('알림 저장 실패', error);
-          //     else {
-          //       const notiDB = realtime.ref(`noti/${post.userInfo.uid}`);
-          //       notiDB.update({ read: false });
-          //     }
-          //   }
-          // );
         }
       });
-    // });
   };
 };
 

@@ -1,18 +1,20 @@
 import React from 'react';
 
+// ICON
+import PersonIcon from '@material-ui/icons/Person';
+
 const Noti = (props) => {
-  const { imageUrl, userName } = props;
-  console.log(props);
+  const { imageUrl, userName, action } = props;
 
   return (
     <div className="notice">
       <div className="user-profile">
-        <img src={imageUrl} alt={userName} />
+        {imageUrl ? <img src={imageUrl} alt={userName} /> : <PersonIcon />}
       </div>
 
       <p className="contents">
         <strong className="title">{userName}</strong>님이 게시글에{' '}
-        <strong className="work">좋아요를 눌렀어요!!</strong>
+        <strong className="work">{action}</strong>
       </p>
     </div>
   );

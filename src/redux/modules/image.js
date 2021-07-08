@@ -24,7 +24,7 @@ const initialState = {
 
 // MIDDLEWARE
 const uploadImageFB = (image) => {
-  return function (dispatch, getState, { history }) {
+  return function (dispatch) {
     dispatch(uploading(true));
 
     const upload = storage.ref(`images/${image.name}`).put(image);

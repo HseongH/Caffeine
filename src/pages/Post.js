@@ -6,9 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import Button from '../components/Button';
 import Contents from '../components/Contents';
 import Permit from '../common/Permit';
+import InfinityScroll from '../components/InfinityScroll';
 
 // REDUX
 import { postActions } from '../redux/modules/post';
+
+// HISTORY
+import { history } from '../redux/configStore';
 
 // ICONS
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -18,10 +22,14 @@ import '../style/scss/post.scss';
 
 const Post = (props) => {
   const dispatch = useDispatch();
-  const postList = useSelector((state) => state.post.list);
+
+  const state = useSelector((state) => state);
+  const postList = state.post.list;
+  const isLoading = state.post.isLoading;
+  const paging = state.post.paging;
 
   useEffect(() => {
-    dispatch(postActions.getPostFB());
+    if (!postList.length) dispatch(postActions.getPostFB());
   }, []);
 
   return (
@@ -29,7 +37,11 @@ const Post = (props) => {
       <div className="container">
         <Permit>
           <div className="post create-post">
-            <Button>
+            <Button
+              clickEvent={() => {
+                history.push('/add-post');
+              }}
+            >
               <AddCircleIcon style={{ fontSize: 50 }} />
             </Button>
 
@@ -44,11 +56,25 @@ const Post = (props) => {
             <Permit>
               <p className="contents">게시물을 추가하여 사진이나 글을 공유해보세요.</p>
 
-              <Button>게시물 추가</Button>
+              <Button
+                clickEvent={() => {
+                  history.push('/add-post');
+                }}
+              >
+                게시물 추가
+              </Button>
             </Permit>
           </div>
         ) : (
-          <Contents postList={postList} />
+          <InfinityScroll
+            callNext={() => {
+              dispatch(postActions.getPostFB(paging.next));
+            }}
+            isNext={paging.next ? true : false}
+            loading={isLoading}
+          >
+            <Contents postList={postList} />
+          </InfinityScroll>
         )}
       </div>
     </section>

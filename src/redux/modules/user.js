@@ -34,10 +34,10 @@ const logInFB = (id, pwd) => {
         .then((user) => {
           dispatch(
             setUser({
-              name: user.displayName,
+              name: user.user.displayName,
               id,
               profile: '',
-              uid: user.uid,
+              uid: user.user.uid,
             })
           );
 

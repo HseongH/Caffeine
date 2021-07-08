@@ -11,11 +11,13 @@ import { postActions } from './post';
 // ACTION
 const GET_COMMENT = 'GET_COMMENT';
 const ADD_COMMENT = 'ADD_COMMENT';
+const DELETE_COMMENT = 'DELETE_COMMENT';
 const LOADING = 'LOADING';
 
 // ACTION CREATOR
 const getComment = createAction(GET_COMMENT, (postId, commentList) => ({ postId, commentList }));
 const addComment = createAction(ADD_COMMENT, (postId, comment) => ({ postId, comment }));
+const delComment = createAction(DELETE_COMMENT, (postId, commentId) => ({ postId, commentId }));
 const loading = createAction(LOADING, (isLoading) => ({ isLoading }));
 
 // INITIAL STATE
@@ -28,7 +30,7 @@ const initialState = {
 const commentDB = firestore.collection('comment');
 
 const getCommentFB = (postId) => {
-  return function (dispatch, getState, { history }) {
+  return function (dispatch) {
     if (!postId) return;
 
     commentDB
@@ -51,7 +53,7 @@ const getCommentFB = (postId) => {
 };
 
 const addCommentFB = (postId, contents) => {
-  return function (dispatch, getState, { history }) {
+  return function (dispatch, getState) {
     const userInfo = getState().user.user;
     let comment = {
       postId,
@@ -83,26 +85,64 @@ const addCommentFB = (postId, contents) => {
               })
             );
 
-            const notiItem = realtime.ref(`noti/${post.userInfo.userId}/list`).push();
+            if (userInfo.uid !== post.userInfo.userId) {
+              const notiItem = realtime.ref(`noti/${post.userInfo.userId}/list`).push();
 
-            notiItem.set(
-              {
-                postId,
-                userName: comment.userName,
-                imageUrl: post.imageUrl,
-                insertDt: comment.insertDt,
-              },
-              (error) => {
-                if (error) console.error('알림 저장 실패', error);
-                else {
-                  const notiDB = realtime.ref(`noti/${post.userInfo.uid}`);
-                  notiDB.update({ read: false });
+              notiItem.set(
+                {
+                  postId,
+                  userName: comment.userName,
+                  imageUrl: post.imageUrl ? post.imageUrl : '',
+                  insertDt: comment.insertDt,
+                  action: '댓글을 남겼어요!!',
+                },
+                (error) => {
+                  if (error) console.error('알림 저장 실패', error);
+                  else {
+                    const notiDB = realtime.ref(`noti/${post.userInfo.userId}`);
+                    notiDB.update({ read: false });
+                  }
                 }
-              }
-            );
+              );
+            }
           }
         });
     });
+  };
+};
+
+const delCommentDB = (postId, commentId) => {
+  return function (dispatch, getState) {
+    if (!commentId) return;
+
+    commentDB
+      .doc(commentId)
+      .delete()
+      .then(() => {
+        const postDB = firestore.collection('post');
+
+        const post = getState().post.list.find((l) => l.id === postId);
+        const increment = firebase.firestore.FieldValue.increment(-1);
+
+        postDB
+          .doc(postId)
+          .update({ commentCnt: increment })
+          .then((_post) => {
+            dispatch(delComment(postId, commentId));
+
+            if (post) {
+              dispatch(
+                postActions.updateCountFB(postId, {
+                  ...post,
+                  commentCnt: parseInt(post.commentCnt) - 1,
+                })
+              );
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
   };
 };
 
@@ -116,9 +156,16 @@ export default handleActions(
 
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        if (draft.list[action.payload.postId])
-          draft.list[action.payload.postId].unshift(action.payload.comment);
-        else draft.list[action.payload.postId] = action.payload.comment;
+        draft.list[action.payload.postId] = draft.list[action.payload.postId]
+          ? [action.payload.comment, ...draft.list[action.payload.postId]]
+          : [action.payload.comment];
+      }),
+
+    [DELETE_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list[action.payload.postId] = draft.list[action.payload.postId].filter(
+          (comment) => comment.id !== action.payload.commentId
+        );
       }),
 
     [LOADING]: (state, action) =>
@@ -134,4 +181,5 @@ export const commentActions = {
   addComment,
   getCommentFB,
   addCommentFB,
+  delCommentDB,
 };

@@ -5,9 +5,10 @@ import Button from './Button';
 
 // ICON
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const Dropdown = (props) => {
-  const { contents } = props;
+  const { children } = props;
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -27,13 +28,9 @@ const Dropdown = (props) => {
         <MoreVertIcon ref={anchorRef} />
       </Button>
 
-      <ul className={open ? 'dropdown' : 'hide'}>
-        {contents.map((text, idx) => (
-          <li key={idx + Date.now()} onClick={handleClose} className="down-items">
-            {text}
-          </li>
-        ))}
-      </ul>
+      <ClickAwayListener onClickAway={handleClose}>
+        <ul className={open ? 'dropdown' : 'hide'}>{children}</ul>
+      </ClickAwayListener>
     </>
   );
 };

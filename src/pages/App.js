@@ -7,7 +7,6 @@ import { history } from '../redux/configStore';
 // REDUX
 import { useDispatch } from 'react-redux';
 import { userActions } from '../redux/modules/user';
-import { likeActions } from '../redux/modules/like';
 
 // FIREBASE
 import { apiKey } from '../firebase/firebase';
@@ -20,6 +19,7 @@ import Post from './Post';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import AddPost from './AddPost';
+import ModifyPost from './ModifyPost';
 import Notice from './Notice';
 
 // STYLE
@@ -44,6 +44,7 @@ function App() {
         <Route path="/sign-up" exact component={SignUp} />
         <Route path="/sign-in" exact component={SignIn} />
         <Route path="/add-post" exact component={AddPost} />
+        <Route path="/modify-post" exact component={ModifyPost} />
         <Route path="/notice" exact component={Notice} />
       </ConnectedRouter>
     </>

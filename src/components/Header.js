@@ -29,13 +29,21 @@ const Header = React.memo((props) => {
     <header className="section">
       <div className="container">
         <h1 className="logo">
-          <Button>
+          <Button
+            clickEvent={() => {
+              history.push('/');
+            }}
+          >
             <AllInclusiveIcon style={{ fontSize: '30' }} />
           </Button>
         </h1>
 
         <div className="tab-menu">
-          <Button>
+          <Button
+            clickEvent={() => {
+              history.push('/');
+            }}
+          >
             <HomeIcon style={{ fontSize: '30' }} />
           </Button>
 
