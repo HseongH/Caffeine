@@ -53,9 +53,8 @@ const Post = (props) => {
           <div className="post no-posts">
             <strong className="title">게시물 없음</strong>
 
+            <p className="contents">게시물을 추가하여 사진이나 글을 공유해보세요.</p>
             <Permit>
-              <p className="contents">게시물을 추가하여 사진이나 글을 공유해보세요.</p>
-
               <Button
                 clickEvent={() => {
                   history.push('/add-post');

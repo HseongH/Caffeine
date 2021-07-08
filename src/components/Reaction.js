@@ -55,10 +55,11 @@ const Reaction = (props) => {
             }}
             placeholder="댓글을 작성해 주세요."
             keyPressEvent={(event) => {
-              if (event.key === 'Enter') {
+              if (event.key === 'Enter' && contents) {
                 addComment();
               }
             }}
+            isVali={true}
           />
         )}
 

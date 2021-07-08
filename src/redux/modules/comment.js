@@ -61,7 +61,7 @@ const addCommentFB = (postId, contents) => {
       userName: userInfo.name,
       userProfile: userInfo.profile,
       contents,
-      insertDt: moment().format('YYYY.MM.DD HH:mm'),
+      insertDt: moment().format('YYYY.MM.DD HH:mm:ss'),
     };
 
     commentDB.add(comment).then((doc) => {

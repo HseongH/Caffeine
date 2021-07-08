@@ -36,6 +36,7 @@ const postDB = firestore.collection('post');
 const getPostFB = (start = null, size = 5) => {
   return function (dispatch, getState) {
     const _paging = getState().post.paging;
+    const idList = getState().post.list.map((post) => post.id);
 
     if (_paging.start && !_paging.next) return;
 
@@ -53,15 +54,15 @@ const getPostFB = (start = null, size = 5) => {
 
         let paging = {
           start: docs.docs[0],
-          next: docs.docs.length === size + 1 ? docs.docs[docs.docs.length - 1] : null,
+          next: docs.docs.length >= size + 1 ? docs.docs[docs.docs.length - 1] : null,
           size,
         };
 
         docs.forEach((doc) => {
-          postList = [...postList, { ...doc.data(), id: doc.id }];
+          if (!idList.includes(doc.id)) postList.push({ ...doc.data(), id: doc.id });
         });
 
-        postList.pop();
+        if (postList.length > size) postList.pop();
         dispatch(getPost(postList, paging));
       });
   };
@@ -78,7 +79,7 @@ const addPostFB = (contents) => {
 
     const _post = {
       contents,
-      insertDt: moment().format('YYYY.MM.DD HH:mm'),
+      insertDt: moment().format('YYYY.MM.DD HH:mm:ss'),
       commentCnt: 0,
       likeCnt: 0,
     };

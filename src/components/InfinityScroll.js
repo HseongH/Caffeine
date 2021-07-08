@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 import _ from 'lodash';
 
 // COMPONENT
-// import Spinner from './Spinner';
+import CircularIndeterminate from './Spinner';
 
 const InfinityScroll = (props) => {
   const { children, callNext, isNext, loading } = props;
@@ -36,7 +36,12 @@ const InfinityScroll = (props) => {
     return () => window.addEventListener('scroll', handleScroll);
   }, [isNext, loading]);
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      {loading && <CircularIndeterminate />}
+    </>
+  );
 };
 
 InfinityScroll.defaultProps = {

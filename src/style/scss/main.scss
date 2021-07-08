@@ -60,36 +60,6 @@ img {
 
 // INPUT
 .input-box {
-  .input--text {
-    color: $fontColor;
-    width: 100%;
-    background: $bgColor;
-    border: 1px solid #ccc;
-    @include radiusBox(12px 14px);
-
-    &::placeholder {
-      color: $lightColor;
-    }
-
-    &::-webkit-input-placeholder {
-      color: $lightColor;
-    }
-
-    &:-ms-input-placeholder {
-      color: $lightColor;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .status-display {
-    font-size: 12px;
-    line-height: 2;
-    text-indent: 10px;
-  }
-
   &.danger {
     .input--text {
       border: solid $danger;
@@ -109,6 +79,36 @@ img {
       color: $primary;
     }
   }
+}
+
+.input--text {
+  color: $fontColor;
+  width: 100%;
+  background: $bgColor;
+  border: 1px solid #ccc;
+  @include radiusBox(12px 14px);
+
+  &::placeholder {
+    color: $lightColor;
+  }
+
+  &::-webkit-input-placeholder {
+    color: $lightColor;
+  }
+
+  &:-ms-input-placeholder {
+    color: $lightColor;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.status-display {
+  font-size: 12px;
+  line-height: 2;
+  text-indent: 10px;
 }
 
 // TEXT

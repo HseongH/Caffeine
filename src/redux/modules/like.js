@@ -82,7 +82,7 @@ const addLikeFB = (postId) => {
                   postId,
                   userName: userInfo.name,
                   imageUrl: post.imageUrl,
-                  insertDt: moment().format('YYYY.MM.DD HH:mm'),
+                  insertDt: moment().format('YYYY.MM.DD HH:mm:ss'),
                   action: '좋아요를 눌렀어요!!',
                 },
                 (error) => {
